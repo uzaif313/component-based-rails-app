@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Core</title>
+  <%= stylesheet_link_tag    "news/application", media: "all" %>
+  <%= javascript_include_tag "news/application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <%=link_to "News", news.root_path, class:"navbar-brand"%>
+      </div>
+      <ul class="nav navbar-nav">
+        <li data-news-hook="header-nav"><%=link_to "Home", news.root_path%></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+        <% if current_user %>
+         <%=link_to "Logout", news.destroy_user_session_path,method: :delete%>
+            <% else %>
+          <%=link_to "Login", news.new_user_session_path%>
+        <% end %>
+      </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <%flash.each do |type,msg|%>
+      <div class="alert alert-<%= type == 'error' ? 'danger':'info'%>">
+          <%=msg%>
+      </div>
+    <%end%>
+    <%= yield %>
+  </div>
+
+</body>
+</html>
